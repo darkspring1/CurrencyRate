@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace CurrencyRate.Domain.Services
 {
-    public class RatesService : BaseService
+    public class RateService : BaseService
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public RatesService(IUnitOfWork unitOfWork, ILogger<RateService> logger) : base(logger)
+        public RateService(IUnitOfWork unitOfWork, ILogger<RateService> logger) : base(logger)
         {
             _unitOfWork = unitOfWork;
         }

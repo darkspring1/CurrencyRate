@@ -12,7 +12,7 @@ namespace CurrencyRate.Domain.Persistent.Ef
         private readonly DataContext _context;
         private readonly Lazy<IRepository<Rate>> _rateRepository;
 
-        public IRepository<Rate> RateRepository => throw new NotImplementedException();
+        public IRepository<Rate> RateRepository => _rateRepository.Value;
 
         public Task CompleteAsync()
         {

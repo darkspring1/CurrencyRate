@@ -8,11 +8,11 @@ namespace CurrencyRate.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RateController : ControllerBase
+    public class RatesController : ControllerBase
     {
         private readonly RateService _rateService;
 
-        public RateController(RateService rateService)
+        public RatesController(RateService rateService)
         {
             _rateService = rateService;
         }
