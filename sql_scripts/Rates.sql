@@ -3,7 +3,7 @@
 CREATE TABLE public."Rates" (
 	"Id" uuid NOT NULL,
 	"Code" text NOT NULL,
-	"Rate" numeric(18, 2) NOT null,
+	"Value" numeric(18, 2) NOT null,
 	"Date" date NOT NULL
 )
 WITH (

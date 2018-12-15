@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CurrencyRate.Abstractions\CurrencyRate.Abstractions.csproj" />
+    <ProjectReference Include="..\CurrencyRate.Dal.Abstractions\CurrencyRate.Dal.Abstractions.csproj" />
+    <ProjectReference Include="..\CurrencyRate.Dal.Ef\CurrencyRate.Dal.Ef.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Persistent\Specifications\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.0" />
+  </ItemGroup>
+
+</Project>

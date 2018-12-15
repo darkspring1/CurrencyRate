@@ -1,20 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using CurrencyRate.Domain.Entities;
+using CurrencyRate.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CurrencyRate.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class RateController : ControllerBase
     {
+        private readonly RateService _rateService;
+
+        public RateController(RateService rateService)
+        {
+            _rateService = rateService;
+        }
+
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<Rate[]> Get()
         {
-            return new string[] { "value1", "value2" };
+            var result = await _rateService.GetRatesAsync();
+
+            return result.Data;
         }
 
         // GET api/values/5

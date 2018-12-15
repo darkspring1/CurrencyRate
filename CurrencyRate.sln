@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyRate.Dal.Abstractio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyRate.Dal.Ef", "CurrencyRate.Dal.Ef\CurrencyRate.Dal.Ef.csproj", "{7B52FA65-824A-48CC-83A2-D586BD1552DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyRate.Abstractions", "CurrencyRate.Abstractions\CurrencyRate.Abstractions.csproj", "{483189C4-F0DD-4D39-B013-49FAF477840F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyRate.Domain", "CurrencyRate.Domain\CurrencyRate.Domain.csproj", "{EF0A17CA-B846-44E6-A350-F94BFCB44690}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{7B52FA65-824A-48CC-83A2-D586BD1552DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B52FA65-824A-48CC-83A2-D586BD1552DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B52FA65-824A-48CC-83A2-D586BD1552DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{483189C4-F0DD-4D39-B013-49FAF477840F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{483189C4-F0DD-4D39-B013-49FAF477840F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{483189C4-F0DD-4D39-B013-49FAF477840F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{483189C4-F0DD-4D39-B013-49FAF477840F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF0A17CA-B846-44E6-A350-F94BFCB44690}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF0A17CA-B846-44E6-A350-F94BFCB44690}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF0A17CA-B846-44E6-A350-F94BFCB44690}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF0A17CA-B846-44E6-A350-F94BFCB44690}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
