@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CurrencyRate.Abstractions
 {
@@ -117,16 +115,5 @@ namespace CurrencyRate.Abstractions
         {
             return new ServiceResult<TError, TResult>() { Exception = e, Errors = errors };
         }
-
-        /// <summary>
-        /// Создаст не успешный ServiceResult
-        /// </summary>
-        /// <typeparam name="TDestination">Тип ServiceResult</typeparam>
-        /// <returns></returns>
-        public IServiceResult<TError, TDestination> CastToFaultedResult<TDestination>()
-        {
-            return ServiceResult<TError, TDestination>.Fault(Exception, Errors);
-        }
-
     }
 }
