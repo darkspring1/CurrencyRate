@@ -18,7 +18,7 @@ namespace CurrencyRate.Domain.Persistent.Ef
 
 
             modelBuilder.Entity<Rate>()
-                .ToTable("public", "rates");
+                .ToTable("Rates", "public");
         }
 
     }
