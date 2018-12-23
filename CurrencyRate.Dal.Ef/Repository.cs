@@ -56,9 +56,9 @@ namespace CurrencyRate.Dal.Ef
             DbContext = context;
         }
 
-        public void Add(T entity)
+        public void Add(params T[] entities)
         {
-            DbContext.Add(entity);
+            DbContext.AddRange(entities);
         }
 
         public virtual void Delete(params T[] entities)
@@ -133,6 +133,5 @@ namespace CurrencyRate.Dal.Ef
             var states = await GetStatesAsync(specification);
             return await states.AnyAsync();
         }
-
     }
 }

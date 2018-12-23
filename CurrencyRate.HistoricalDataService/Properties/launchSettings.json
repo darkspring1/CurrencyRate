@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "CurrencyRate.HistoricalDataService": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "development"
+      }
+    }
+  }
+}

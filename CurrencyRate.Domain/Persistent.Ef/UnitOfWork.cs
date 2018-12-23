@@ -16,7 +16,7 @@ namespace CurrencyRate.Domain.Persistent.Ef
 
         public Task CompleteAsync()
         {
-            throw new NotImplementedException();
+            return _context.SaveChangesAsync();
         }
 
 

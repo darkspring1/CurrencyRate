@@ -18,6 +18,6 @@ namespace CurrencyRate.HistoricalDataService
         /// <summary>
         /// годы за который стоит выгрузить данные
         /// </summary>
-        public int[] Years => GetArray("Years", str => 0);
+        public int[] Years => GetArray("Years", int.Parse);
     }
 }

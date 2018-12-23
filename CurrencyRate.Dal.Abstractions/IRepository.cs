@@ -9,7 +9,7 @@ namespace CurrencyRate.Dal.Abstractions
 
         void Update(T entity);
 
-        void Add(T entity);
+        void Add(params T[] entities);
 
         void Delete(params T[] entities);
 
