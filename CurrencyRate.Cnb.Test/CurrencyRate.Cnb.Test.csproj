@@ -8,10 +8,14 @@
 
   <ItemGroup>
     <None Remove="appsettings.tests.json" />
+    <None Remove="Data\daily.txt" />
     <None Remove="Data\year.txt" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Data\daily.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\year.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

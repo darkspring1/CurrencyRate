@@ -14,7 +14,30 @@ namespace CurrencyRate.Cnb
     {
         private const string PATH_TEMPLATE_YEAR     = "/en/financial_markets/foreign_exchange_market/exchange_rate_fixing/year.txt?year={0}";
         private const string PATH_TEMPLATE_DAILY    = "/en/financial_markets/foreign_exchange_market/exchange_rate_fixing/daily.txt?date={0}";
+        private readonly NumberFormatInfo _numberFormatInfo;
         private readonly HttpClient _httpClient;
+
+        CnbRate[] ParseDay(DateTime date, string response)
+        {
+            var strings = response.Split("\n").Skip(2);
+            var result = new List<CnbRate>();
+            foreach (var str in strings)
+            {
+                if (str != "")
+                {
+                    var strData = str.Split('|');
+                    var rate = new CnbRate(
+                        date: date,
+                        value: decimal.Parse(strData[4], _numberFormatInfo),
+                        code: strData[3],
+                        amount: int.Parse(strData[2]));
+
+                    result.Add(rate);
+                }
+            }
+
+            return result.ToArray();
+        }
 
         CnbRate[] ParseYear(string response)
         {
@@ -30,7 +53,7 @@ namespace CurrencyRate.Cnb
                 })
                 .ToArray();
 
-            var numberFormatInfo = new NumberFormatInfo { NumberDecimalSeparator = "." };
+            
             var result = new List<CnbRate>();
 
             for (int i = 1; i < strings.Length; i++)
@@ -43,7 +66,7 @@ namespace CurrencyRate.Cnb
                     for (int j = 1; j < strData.Length; j++)
                     {
                         var rate = new CnbRate(
-                            value: decimal.Parse(strData[j], numberFormatInfo),
+                            value: decimal.Parse(strData[j], _numberFormatInfo),
                             code: codesWithAmount[j - 1].Code,
                             amount: codesWithAmount[j - 1].Amount,
                             date: date);
@@ -58,6 +81,7 @@ namespace CurrencyRate.Cnb
 
         public CnbService(CnbSettings settings, ILogger<CnbService> logger) : base(logger)
         {
+            _numberFormatInfo = new NumberFormatInfo { NumberDecimalSeparator = "." };
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = settings.BaseAddress;
         }
@@ -74,6 +98,17 @@ namespace CurrencyRate.Cnb
             {
                 var str = await SendAsync(string.Format(PATH_TEMPLATE_YEAR, year));
                 var rates = ParseYear(str);
+                return ServiceResult<CnbError>.Success(rates);
+            });
+        }
+
+        public Task<IServiceResult<CnbError, CnbRate[]>> GetDailyRatesAsync(DateTime date)
+        {
+            return RunAsync(async () =>
+            {
+                var dateParam = date.Date.ToString("dd.MM.yyyy");
+                var str = await SendAsync(string.Format(PATH_TEMPLATE_DAILY, dateParam));
+                var rates = ParseDay(date.Date, str);
                 return ServiceResult<CnbError>.Success(rates);
             });
         }

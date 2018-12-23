@@ -62,5 +62,25 @@ namespace CurrencyRate.Cnb.Test
                 AssertCnbRate(new DateTime(2018, 12, 14), 1.590M, 1, "ZAR", rates[131]);
             }
         }
+
+
+        [Fact]
+        [Trait("category", TRAIT)]
+        public async Task ShouldReturnDailyRates()
+        {
+            using (var cnb = CreateCnbService("daily.txt"))
+            {
+                var expectedDate = new DateTime(2018, 7, 29);
+
+                var result = await cnb.GetDailyRatesAsync(expectedDate);
+                var rates = result.Data;
+
+                Assert.Equal(33, rates.Length);
+
+                AssertCnbRate(expectedDate, 16.255M, 1, "AUD", rates[0]);
+                AssertCnbRate(expectedDate, 25.620M, 1, "EUR", rates[7]);
+                AssertCnbRate(expectedDate, 22.039M, 1, "USD", rates[32]);
+            }
+        }
     }
 }
