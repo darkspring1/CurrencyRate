@@ -18,7 +18,7 @@ namespace CurrencyRate.Cnb
 
         CnbRate[] ParseYear(string response)
         {
-            var strings = response.Split(Environment.NewLine);
+            var strings = response.Split("\n");
 
             var codesWithAmount = strings[0]
                 .Split('|')
@@ -35,23 +35,22 @@ namespace CurrencyRate.Cnb
 
             for (int i = 1; i < strings.Length; i++)
             {
-                var strData = strings[i].Split('|');
-                var date = DateTime.Parse(strData[0]);
-                for (int j = 1; j < strData.Length; j++)
+                if (strings[i] != "")
                 {
-                    if (j == 32)
+                    var strData = strings[i].Split('|');
+                    
+                    var date = DateTime.Parse(strData[0]);
+                    for (int j = 1; j < strData.Length; j++)
                     {
+                        var rate = new CnbRate(
+                            value: decimal.Parse(strData[j], numberFormatInfo),
+                            code: codesWithAmount[j - 1].Code,
+                            amount: codesWithAmount[j - 1].Amount,
+                            date: date);
 
+                        result.Add(rate);
                     }
-                    var rate = new CnbRate(
-                        value: decimal.Parse(strData[j], numberFormatInfo),
-                        code: codesWithAmount[j - 1].Code,
-                        amount: codesWithAmount[j - 1].Amount,
-                        date: date);
-
-                    result.Add(rate);
                 }
-
             }
 
             return result.ToArray();
