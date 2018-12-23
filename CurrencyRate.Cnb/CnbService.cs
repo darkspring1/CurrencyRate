@@ -102,7 +102,12 @@ namespace CurrencyRate.Cnb
             });
         }
 
-        public Task<IServiceResult<CnbError, CnbRate[]>> GetDailyRatesAsync(DateTime date)
+        /// <summary>
+        /// Дневной курс
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public virtual Task<IServiceResult<CnbError, CnbRate[]>> GetDailyRatesAsync(DateTime date)
         {
             return RunAsync(async () =>
             {

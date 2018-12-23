@@ -4,7 +4,7 @@ using Rkl.Settings;
 
 namespace CurrencyRate.DailyRateService
 {
-    class Settings : ConfigSection
+    public class Settings : ConfigSection
     {
         public Settings(IConfiguration configuration) : base(configuration)
         {

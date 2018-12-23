@@ -23,7 +23,7 @@ namespace CurrencyRate.DailyRateService
         }
 
        
-        public RateJob(IServiceProvider serviceProvider) : base(serviceProvider.GetService<ILogger<RateJob>>())
+        public RateJob(IServiceProvider serviceProvider) : base(serviceProvider.GetRequiredService<ILogger<RateJob>>())
         {
             _jobId = Guid.NewGuid().ToString();
             _serviceProvider = serviceProvider;
@@ -37,23 +37,38 @@ namespace CurrencyRate.DailyRateService
 
                 using (var scope = _serviceProvider.CreateScope())
                 {
+                    var date = DateTime.UtcNow.Date;
                     var cndService = scope.ServiceProvider.GetRequiredService<CnbService>();
-
-                    var ratesResult = await cndService.GetDailyRatesAsync(DateTime.UtcNow.Date);
-
-                    if (ratesResult.IsFaulted)
-                    {
-                        return ratesResult;
-                    }
-
-                    var rates = ratesResult
-                                    .Data
-                                    .Select(r => Rate.Create(r.Code, r.Value, r.Date))
-                                    .ToArray();
-
                     var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
 
-                    unitOfWork.RateRepository.Add(rates);
+                    var ratesResultTask = cndService.GetDailyRatesAsync(date);
+                    var entitiesTask = unitOfWork.RateRepository.GetEntitiesAsync(Specifications.DailyRate(date));
+
+                    await Task.WhenAll(ratesResultTask, entitiesTask);
+
+                    if (ratesResultTask.Result.IsFaulted)
+                    {
+                        return ratesResultTask.Result;
+                    }
+
+                    var entitiesFromDb = entitiesTask.Result.ToDictionary(x => x.Code);
+
+                    
+                    foreach (var r in ratesResultTask.Result.Data)
+                    {
+                        Rate rateForUpdate = null;
+                        //проверим, если курс уже записан в БД, просто обновим его
+                        if (entitiesFromDb.TryGetValue(r.Code, out rateForUpdate))
+                        {
+                            rateForUpdate.SetValue(r.Value);
+                        }
+                        else
+                        {
+                            //если курса нет в БД создадим и добавим его
+                            unitOfWork.RateRepository.Add(Rate.Create(r.Code, r.Value, r.Date));
+                        }
+                    }
+
                     await unitOfWork.CompleteAsync();
                 }
                 

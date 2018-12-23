@@ -14,6 +14,10 @@ namespace CurrencyRate.Domain.Entities
         public decimal Value { get; private set; }
         public DateTime Date { get; private set; }
 
+        public void SetValue(decimal value)
+        {
+            Value = value;
+        }
 
         public static Rate Create(string code, decimal value, DateTime date)
         {
