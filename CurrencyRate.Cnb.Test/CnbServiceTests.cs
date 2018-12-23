@@ -9,7 +9,7 @@ using Xunit;
 namespace CurrencyRate.Cnb.Test
 {
     [Collection(Constants.Fixtures.SingletonСollection)]
-    public class UnitTest1
+    public class CnbServiceTests
     {
         const string TRAIT = "Cnb.Unit";
         private readonly CnbSettings _settings;
@@ -35,16 +35,20 @@ namespace CurrencyRate.Cnb.Test
             return new TestCnbService(response, _settings, CreateLogger<CnbService>());
         }
 
-        public UnitTest1(SingletonFixture singletonFixture)
+        public CnbServiceTests(SingletonFixture singletonFixture)
         {
             _settings = singletonFixture.Settings;
             _loggerFactory = singletonFixture.LoggerFactory;
         }
 
 
+        /// <summary>
+        /// Успешный сценарий получения курсов за год
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         [Trait("category", TRAIT)]
-        public async Task Test1()
+        public async Task ShouldReturnYearRates()
         {
             using (var cnb = CreateCnbService("year.txt"))
             {
