@@ -5,21 +5,23 @@ VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyRate.Api", "CurrencyRate.Api\CurrencyRate.Api.csproj", "{73D50511-FECA-444F-9223-0FD22D72D17D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyRate.Dal.Abstractions", "CurrencyRate.Dal.Abstractions\CurrencyRate.Dal.Abstractions.csproj", "{30A981C3-CF5E-4E2C-85DE-26F8FBECF2DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyRate.Dal.Abstractions", "CurrencyRate.Dal.Abstractions\CurrencyRate.Dal.Abstractions.csproj", "{30A981C3-CF5E-4E2C-85DE-26F8FBECF2DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyRate.Dal.Ef", "CurrencyRate.Dal.Ef\CurrencyRate.Dal.Ef.csproj", "{7B52FA65-824A-48CC-83A2-D586BD1552DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyRate.Dal.Ef", "CurrencyRate.Dal.Ef\CurrencyRate.Dal.Ef.csproj", "{7B52FA65-824A-48CC-83A2-D586BD1552DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyRate.Abstractions", "CurrencyRate.Abstractions\CurrencyRate.Abstractions.csproj", "{483189C4-F0DD-4D39-B013-49FAF477840F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyRate.Abstractions", "CurrencyRate.Abstractions\CurrencyRate.Abstractions.csproj", "{483189C4-F0DD-4D39-B013-49FAF477840F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyRate.Domain", "CurrencyRate.Domain\CurrencyRate.Domain.csproj", "{EF0A17CA-B846-44E6-A350-F94BFCB44690}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyRate.Domain", "CurrencyRate.Domain\CurrencyRate.Domain.csproj", "{EF0A17CA-B846-44E6-A350-F94BFCB44690}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyRate.Common", "CurrencyRate.Common\CurrencyRate.Common.csproj", "{1FCF7A0D-3AF4-4B29-B415-3F5E72940FC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyRate.Common", "CurrencyRate.Common\CurrencyRate.Common.csproj", "{1FCF7A0D-3AF4-4B29-B415-3F5E72940FC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyRate.HistoricalDataService", "CurrencyRate.HistoricalDataService\CurrencyRate.HistoricalDataService.csproj", "{6BD0BD54-13B8-4273-8739-0F300D21DBE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyRate.HistoricalDataService", "CurrencyRate.HistoricalDataService\CurrencyRate.HistoricalDataService.csproj", "{6BD0BD54-13B8-4273-8739-0F300D21DBE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyRate.Cnb", "CurrencyRate.Cnb\CurrencyRate.Cnb.csproj", "{88164D36-5663-4960-B3C4-2AFB57216992}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyRate.Cnb", "CurrencyRate.Cnb\CurrencyRate.Cnb.csproj", "{88164D36-5663-4960-B3C4-2AFB57216992}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyRate.Cnb.Test", "CurrencyRate.Cnb.Test\CurrencyRate.Cnb.Test.csproj", "{614EFC33-F8B0-4F6F-BC52-F84996CA4A33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyRate.Cnb.Test", "CurrencyRate.Cnb.Test\CurrencyRate.Cnb.Test.csproj", "{614EFC33-F8B0-4F6F-BC52-F84996CA4A33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyRate.DailyRateService", "CurrencyRate.DailyRateService\CurrencyRate.DailyRateService.csproj", "{A8B4FF14-A336-4D57-BE12-B300036664FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{614EFC33-F8B0-4F6F-BC52-F84996CA4A33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{614EFC33-F8B0-4F6F-BC52-F84996CA4A33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{614EFC33-F8B0-4F6F-BC52-F84996CA4A33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8B4FF14-A336-4D57-BE12-B300036664FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8B4FF14-A336-4D57-BE12-B300036664FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8B4FF14-A336-4D57-BE12-B300036664FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8B4FF14-A336-4D57-BE12-B300036664FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
