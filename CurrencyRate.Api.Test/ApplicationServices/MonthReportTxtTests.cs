@@ -1,4 +1,4 @@
-﻿using CurrencyRate.Api.ApplicationServices;
+﻿using CurrencyRate.Api.ApplicationServices.Reports;
 using CurrencyRate.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -7,12 +7,12 @@ using Xunit;
 
 namespace CurrencyRate.Api.Test.ApplicationServices
 {
-    public class MonthTests
+    public class MonthReportTxtTests
     {
 
         List<DateTime[]> GenerateWeeks(int year, int month)
         {
-            var m = new Month(year, month, new Rate[0]);
+            var m = new MonthReportTxt(year, month, new Rate[0]);
             var result = new List<DateTime[]>();
             foreach (var w in m.Weeks)
             {
@@ -216,7 +216,7 @@ namespace CurrencyRate.Api.Test.ApplicationServices
             {
                 try
                 {
-                    var actualMonth = new Month(2018, expectedMonth.Number, new Domain.Entities.Rate[0]);
+                    var actualMonth = new MonthReportTxt(2018, expectedMonth.Number, new Rate[0]);
                     for (int i = 0; i < expectedMonth.Weeks.Length; i++)
                     {
                         var expectedWeek = expectedMonth.Weeks[i];
@@ -240,8 +240,8 @@ namespace CurrencyRate.Api.Test.ApplicationServices
             const int month = 2;
 
             var rates = GetFebruaryRates();
-            var actualMonth = new Month(year, month, rates);
-            var report = actualMonth.ToTxt();
+            var actualMonth = new MonthReportTxt(year, month, rates);
+            var report = actualMonth.ToString();
 
             using (var reader = new StringReader(report))
             {

@@ -1,18 +1,17 @@
 ﻿using CurrencyRate.Domain.Entities;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 
 namespace CurrencyRate.Api.ApplicationServices.Reports
 {
     public abstract class Week
     {
-        const string DECIMAL_FORMAT = "0.00";
+        protected const string DECIMAL_FORMAT = "0.00";
         private readonly List<Rate> _rates;
+        private readonly Func<DateTime, Week> _weekCtor;
 
-        decimal GetMediana(decimal[] values)
+        protected decimal GetMediana(decimal[] values)
         {
             var r = values.Length % 2;
             if (r == 0)
@@ -26,7 +25,7 @@ namespace CurrencyRate.Api.ApplicationServices.Reports
             return values[values.Length / 2];
         }
 
-        (string Code, decimal[] Values)[] GroupRatesByCode()
+        protected (string Code, decimal[] Values)[] GroupRatesByCode()
         {
 
             return Rates
@@ -39,7 +38,11 @@ namespace CurrencyRate.Api.ApplicationServices.Reports
                 .ToArray();
         }
 
-        public Week(DateTime startedOn)
+        protected abstract Week Create(DateTime startedOn);
+
+        protected abstract string ToStr();
+
+        protected Week(DateTime startedOn)
         {
             _rates = new List<Rate>();
             StartedOn = startedOn;
@@ -81,26 +84,12 @@ namespace CurrencyRate.Api.ApplicationServices.Reports
                 return null;
             }
 
-            return new Week(nextWeekStartedOn);
+            return Create(nextWeekStartedOn);
         }
 
-        internal string ToTxt()
+        public override string ToString()
         {
-            var sb = new StringBuilder();
-            
-            sb.Append($"{StartedOn.Day}..{FinishedOn.Day}: ");
-
-            var rateGropus = GroupRatesByCode();
-
-            foreach (var g in rateGropus)
-            {
-                var min = g.Values.First();
-                var max = g.Values.Last();
-                var mediana = GetMediana(g.Values);
-                sb.Append($"{g.Code} - max: {max.ToString(DECIMAL_FORMAT, CultureInfo.InvariantCulture)}, min: {min.ToString(DECIMAL_FORMAT, CultureInfo.InvariantCulture)}, mediana: {mediana.ToString(DECIMAL_FORMAT, CultureInfo.InvariantCulture)}; ");
-            }
-
-            return sb.ToString();
+            return ToStr();
         }
 
         public bool TryAddRate(Rate rate)
