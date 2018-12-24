@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using CurrencyRate.Domain.Entities;
-using CurrencyRate.Domain.Services;
+﻿using System.Threading.Tasks;
+using CurrencyRate.Api.ApplicationServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CurrencyRate.Api.Controllers
@@ -10,45 +8,22 @@ namespace CurrencyRate.Api.Controllers
     [ApiController]
     public class RatesController : ControllerBase
     {
-        private readonly RateService _rateService;
+        private readonly ApplicationRateService _rateService;
 
-        public RatesController(RateService rateService)
+        public RatesController(ApplicationRateService rateService)
         {
             _rateService = rateService;
         }
 
         // GET api/values
         [HttpGet]
-        public async Task<Rate[]> Get()
+        public async Task<object> Get(int year, int month)
         {
-            var result = await _rateService.GetRatesAsync();
+            var result = await _rateService.GetRatesAsync(year, month, "txt");
 
             return result.Data;
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+      
     }
 }

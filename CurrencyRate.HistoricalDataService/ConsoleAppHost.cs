@@ -51,7 +51,7 @@ namespace CurrencyRate.HistoricalDataService
 
             var rates = results
                 .SelectMany(r => r.Data)
-                .Select(r => Rate.Create(r.Code, r.Value, r.Date))
+                .Select(r => Rate.Create(r.Code, r.Value, r.Amount, r.Date))
                 .ToArray();
 
             _unitOfWork.RateRepository.Add(rates);

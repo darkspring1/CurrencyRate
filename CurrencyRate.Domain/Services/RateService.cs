@@ -2,6 +2,7 @@
 using CurrencyRate.Domain.Entities;
 using CurrencyRate.Domain.Errors;
 using CurrencyRate.Domain.Persistent;
+using CurrencyRate.Domain.Persistent.Specifications;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,12 +18,11 @@ namespace CurrencyRate.Domain.Services
             _unitOfWork = unitOfWork;
         }
 
-
-        public Task<IServiceResult<Error, Rate[]>> GetRatesAsync()
+        public Task<IServiceResult<Error, Rate[]>> GetRatesAsync(int year, int month)
         {
             return RunAsync(async () =>
             {
-                var rates = await _unitOfWork.RateRepository.GetEntitiesAsync();
+                var rates = await _unitOfWork.RateRepository.GetEntitiesAsync(Specifications.MonthRate(year, month));
                 return ServiceResult<Error>.Success(rates.ToArray());
             });
         }

@@ -73,7 +73,7 @@ namespace CurrencyRate.DailyRateService.Test
         {
             var date = DateTime.UtcNow.Date;
 
-            var rateForUpdate = Rate.Create(code: "EUR", date: date, value: 25);
+            var rateForUpdate = Rate.Create(code: "EUR", date: date, value: 25, amount: 1);
             decimal newValue = 25.620M;
 
             SetData(rateForUpdate);

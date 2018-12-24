@@ -67,7 +67,7 @@ namespace CurrencyRate.DailyRateService
                         else
                         {
                             //если курса нет в БД создадим и добавим его
-                            unitOfWork.RateRepository.Add(Rate.Create(r.Code, r.Value, r.Date));
+                            unitOfWork.RateRepository.Add(Rate.Create(r.Code, r.Value, r.Amount, r.Date));
                         }
                     }
 
