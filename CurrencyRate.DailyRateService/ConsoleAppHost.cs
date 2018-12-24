@@ -38,7 +38,17 @@ namespace CurrencyRate.DailyRateService
             _scheduler.JobFactory = new JobFactory(_serviceProvider);
 
             var jobDetail = JobBuilder.Create<RateJob>().Build();
-            var trigger = TriggerBuilder.Create().WithSimpleSchedule(s => s.WithIntervalInSeconds(5).RepeatForever()).Build();
+
+            _logger.LogInformation($"CronExpression: {_settings.CronExpression}");
+
+            var trigger = TriggerBuilder
+                .Create()
+                .WithIdentity("trigger1", "group1")
+                .ForJob(jobDetail)
+                .WithCronSchedule(_settings.CronExpression)
+                .StartNow()
+                .Build();
+
             await _scheduler.ScheduleJob(jobDetail, trigger);
             await _scheduler.Start();
         }

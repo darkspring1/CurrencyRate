@@ -13,5 +13,10 @@ namespace CurrencyRate.DailyRateService
         public string ConnectionString => GetString("ConnectionString");
 
         public CnbSettings Cnb => GetSection<CnbSettings>("Cnb");
+
+        /// <summary>
+        /// Настройка для запуска по Cron
+        /// </summary>
+        public string CronExpression => GetString(nameof(CronExpression));
     }
 }

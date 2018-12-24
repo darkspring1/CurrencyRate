@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 
 namespace CurrencyRate.DailyRateService
 {
+
+    [DisallowConcurrentExecution] //ВАЖНО! запрещаем параллельное выполнение для этого Job'a
     public class RateJob : BaseService, IJob
     {
         private readonly IServiceProvider _serviceProvider;
