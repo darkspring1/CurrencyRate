@@ -11,7 +11,7 @@ namespace CurrencyRate.Api.Test.ApplicationServices
     {
         List<DateTime[]> GenerateWeeks(int year, int month)
         {
-            var m = new MonthReportTxt(year, month, new Rate[0]);
+            var m = new TxtReportBuilder(year, month, new Rate[0]);
             var result = new List<DateTime[]>();
             foreach (var w in m.Weeks)
             {
@@ -215,7 +215,7 @@ namespace CurrencyRate.Api.Test.ApplicationServices
             {
                 try
                 {
-                    var actualMonth = new MonthReportTxt(2018, expectedMonth.Number, new Rate[0]);
+                    var actualMonth = new TxtReportBuilder(2018, expectedMonth.Number, new Rate[0]);
                     for (int i = 0; i < expectedMonth.Weeks.Length; i++)
                     {
                         var expectedWeek = expectedMonth.Weeks[i];
@@ -239,7 +239,7 @@ namespace CurrencyRate.Api.Test.ApplicationServices
             const int month = 2;
 
             var rates = GetFebruaryRates();
-            var actualMonth = new MonthReportTxt(year, month, rates);
+            var actualMonth = new TxtReportBuilder(year, month, rates);
             var report = actualMonth.ToString();
 
             using (var reader = new StringReader(report))

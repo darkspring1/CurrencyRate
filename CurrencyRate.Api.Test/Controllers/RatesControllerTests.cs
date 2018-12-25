@@ -60,7 +60,7 @@ namespace CurrencyRate.Api.Test
         }
 
         [Fact]
-        public async Task Test1()
+        public async Task ShouldReturnTxtReport()
         {
             const int year = 2018;
             const int month = 2;
@@ -78,7 +78,7 @@ namespace CurrencyRate.Api.Test
 
             var controller = _serviceProvider.GetRequiredService<RatesController>();
 
-            await controller.Get(2018, 2);
+            await controller.Get(2018, 2, "txt");
         }
     }
 }

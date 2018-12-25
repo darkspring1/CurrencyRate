@@ -19,7 +19,6 @@
     },
     "CurrencyRate.Api": {
       "commandName": "Project",
-      "launchBrowser": true,
       "launchUrl": "api/rates",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

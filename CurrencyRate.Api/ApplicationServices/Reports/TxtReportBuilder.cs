@@ -5,13 +5,13 @@ using System.Text;
 
 namespace CurrencyRate.Api.ApplicationServices.Reports
 {
-    public class MonthReportTxt : MonthReport
+    public class TxtReportBuilder : ReportBuilder<string>
     {
-        public MonthReportTxt(int year, int month, Rate[] rates) : base(year, month, rates)
+        public TxtReportBuilder(int year, int month, Rate[] rates) : base(year, month, rates)
         {
         }
-       
-        protected override string ToStr()
+
+        public override string Build()
         {
             var sb = new StringBuilder();
 

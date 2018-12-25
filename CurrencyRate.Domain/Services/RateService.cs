@@ -4,6 +4,7 @@ using CurrencyRate.Domain.Errors;
 using CurrencyRate.Domain.Persistent;
 using CurrencyRate.Domain.Persistent.Specifications;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,6 +23,16 @@ namespace CurrencyRate.Domain.Services
         {
             return RunAsync(async () =>
             {
+                if (year < 1990 || year > DateTime.UtcNow.Year)
+                {
+                    return ServiceResult<Error, Rate[]>.Fault(null, BlErrors.Error1003(nameof(year), year.ToString()));
+                }
+
+                if (month < 1 || month > 12)
+                {
+                    return ServiceResult<Error, Rate[]>.Fault(null, BlErrors.Error1003(nameof(month), month.ToString()));
+                }
+
                 var rates = await _unitOfWork.RateRepository.GetEntitiesAsync(Specifications.MonthRate(year, month));
                 return ServiceResult<Error>.Success(rates.ToArray());
             });

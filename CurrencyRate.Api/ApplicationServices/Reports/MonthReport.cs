@@ -5,13 +5,13 @@ using System.Collections.Generic;
 namespace CurrencyRate.Api.ApplicationServices.Reports
 {
 
-    public abstract class MonthReport
+    public abstract class ReportBuilder<TReport>
     {
         protected const string DECIMAL_FORMAT = "0.00";
 
-        protected abstract string ToStr();
+        public abstract TReport Build ();
 
-        public MonthReport(int year, int month, Rate[] rates)
+        public ReportBuilder(int year, int month, Rate[] rates)
         {
             var weeks = new List<Week>();
             var week = new Week(new DateTime(year, month, 1));
@@ -38,10 +38,5 @@ namespace CurrencyRate.Api.ApplicationServices.Reports
         }
 
         public Week[] Weeks { get; private set; }
-
-        public override string ToString()
-        {
-            return ToStr();
-        }
     }
 }

@@ -15,13 +15,35 @@ namespace CurrencyRate.Api.ApplicationServices
             _rateService = rateService;
         }
        
-        public Task<IServiceResult<Error, MonthReport>> GetRatesAsync(int year, int month, string format)
+        public Task<IServiceResult<Error, ReportBuilder<string>>> GetTxtReportAsync(int year, int month)
         {
             return RunAsync(async () =>
             {
                 var ratesResult = await _rateService.GetRatesAsync(year, month);
 
-                MonthReport monthWithWeeks = new MonthReportTxt(year, month, ratesResult.Data);
+                if (ratesResult.IsFaulted)
+                {
+                    return ratesResult.TransformToFaultedResult<ReportBuilder<string>>();
+                }
+
+                ReportBuilder<string> monthWithWeeks = new TxtReportBuilder(year, month, ratesResult.Data);
+
+                return ServiceResult<Error>.Success(monthWithWeeks);
+            });
+        }
+
+        public Task<IServiceResult<Error, ReportBuilder<object>>> GetJsonReportAsync(int year, int month)
+        {
+            return RunAsync(async () =>
+            {
+                var ratesResult = await _rateService.GetRatesAsync(year, month);
+
+                if (ratesResult.IsFaulted)
+                {
+                    return ratesResult.TransformToFaultedResult<ReportBuilder<object>>();
+                }
+
+                ReportBuilder<object> monthWithWeeks = new ObjectReportBuilder(year, month, ratesResult.Data);
 
                 return ServiceResult<Error>.Success(monthWithWeeks);
             });

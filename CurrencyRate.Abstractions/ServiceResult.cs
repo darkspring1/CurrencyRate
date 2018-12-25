@@ -42,7 +42,7 @@ namespace CurrencyRate.Abstractions
         /// </summary>
         /// <typeparam name="TDestination">Тип ServiceResult</typeparam>
         /// <returns></returns>
-        public IServiceResult<TError, TDestination> CastToFaultedResult<TDestination>()
+        public IServiceResult<TError, TDestination> TransformToFaultedResult<TDestination>()
         {
             return ServiceResult<TError, TDestination>.Fault(Exception, Errors);
         }
