@@ -9,7 +9,6 @@ namespace CurrencyRate.Api.Test.ApplicationServices
 {
     public class MonthReportTxtTests
     {
-
         List<DateTime[]> GenerateWeeks(int year, int month)
         {
             var m = new MonthReportTxt(year, month, new Rate[0]);
@@ -248,8 +247,7 @@ namespace CurrencyRate.Api.Test.ApplicationServices
                 var firstLine = reader.ReadLine();
                 var secondLine = reader.ReadLine();
                 var thirdLine = reader.ReadLine();
-
-                Assert.Equal("1..2: USD - max: 22.10, min: 22.09, mediana: 22.10; EUR - max: 25.61, min: 25.53, mediana: 25.57; PHP - max: 0.41, min: 0.41, mediana: 0.41; ", thirdLine);
+                Assert.Equal("1..2: USD - max: 22.10, min: 22.09, media: 22.10; EUR - max: 25.61, min: 25.53, media: 25.57; PHP - max: 0.41, min: 0.41, media: 0.41; ", thirdLine);
             }
         }
     }

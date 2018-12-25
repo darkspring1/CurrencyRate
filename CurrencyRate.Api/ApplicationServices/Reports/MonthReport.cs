@@ -7,14 +7,14 @@ namespace CurrencyRate.Api.ApplicationServices.Reports
 
     public abstract class MonthReport
     {
-        protected abstract Week CreateWeek(DateTime startedOn);
+        protected const string DECIMAL_FORMAT = "0.00";
 
         protected abstract string ToStr();
 
         public MonthReport(int year, int month, Rate[] rates)
         {
             var weeks = new List<Week>();
-            var week = CreateWeek(new DateTime(year, month, 1));
+            var week = new Week(new DateTime(year, month, 1));
 
             do
             {

@@ -5,13 +5,27 @@ using System.Linq;
 
 namespace CurrencyRate.Api.ApplicationServices.Reports
 {
-    public abstract class Week
+    public class Week
     {
-        protected const string DECIMAL_FORMAT = "0.00";
-        private readonly List<Rate> _rates;
-        private readonly Func<DateTime, Week> _weekCtor;
+        internal class ReportRateInfo
+        {
+            public ReportRateInfo(string code, decimal min, decimal max, decimal media)
+            {
+                Code = code;
+                Min = min;
+                Max = max;
+                Media = media;
+            }
 
-        protected decimal GetMediana(decimal[] values)
+            public string Code { get; }
+            public decimal Min { get; }
+            public decimal Max { get; }
+            public decimal Media { get; }
+        }
+
+        private readonly List<Rate> _rates;
+
+        protected decimal GetMedia(decimal[] values)
         {
             var r = values.Length % 2;
             if (r == 0)
@@ -27,8 +41,7 @@ namespace CurrencyRate.Api.ApplicationServices.Reports
 
         protected (string Code, decimal[] Values)[] GroupRatesByCode()
         {
-
-            return Rates
+            return _rates
                 .GroupBy(x => x.Code)
                 .Select(g =>
                 (
@@ -38,11 +51,24 @@ namespace CurrencyRate.Api.ApplicationServices.Reports
                 .ToArray();
         }
 
-        protected abstract Week Create(DateTime startedOn);
+        internal List<ReportRateInfo> GetRateInfos()
+        {
+            var rateGropus = GroupRatesByCode();
 
-        protected abstract string ToStr();
+            var result = new List<ReportRateInfo>();
+            foreach (var g in rateGropus)
+            {
+                var min = g.Values.First();
+                var max = g.Values.Last();
+                var media = GetMedia(g.Values);
 
-        protected Week(DateTime startedOn)
+                result.Add(new ReportRateInfo(g.Code, min, max, media));
+            }
+
+            return result;
+        }
+
+        internal Week(DateTime startedOn)
         {
             _rates = new List<Rate>();
             StartedOn = startedOn;
@@ -84,15 +110,10 @@ namespace CurrencyRate.Api.ApplicationServices.Reports
                 return null;
             }
 
-            return Create(nextWeekStartedOn);
+            return new Week(nextWeekStartedOn);
         }
-
-        public override string ToString()
-        {
-            return ToStr();
-        }
-
-        public bool TryAddRate(Rate rate)
+        
+        internal bool TryAddRate(Rate rate)
         {
             if (rate.Date >= StartedOn && rate.Date <= FinishedOn)
             {
@@ -103,6 +124,6 @@ namespace CurrencyRate.Api.ApplicationServices.Reports
             return false;
         }
 
-        public IReadOnlyList<Rate> Rates => _rates;
+        //public IReadOnlyList<Rate> Rates => _rates;
     }
 }

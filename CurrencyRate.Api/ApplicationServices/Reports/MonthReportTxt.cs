@@ -1,5 +1,6 @@
 ﻿using CurrencyRate.Domain.Entities;
 using System;
+using System.Globalization;
 using System.Text;
 
 namespace CurrencyRate.Api.ApplicationServices.Reports
@@ -9,12 +10,7 @@ namespace CurrencyRate.Api.ApplicationServices.Reports
         public MonthReportTxt(int year, int month, Rate[] rates) : base(year, month, rates)
         {
         }
-
-        protected override Week CreateWeek(DateTime startedOn)
-        {
-            return new WeekTxt(startedOn);
-        }
-
+       
         protected override string ToStr()
         {
             var sb = new StringBuilder();
@@ -24,7 +20,15 @@ namespace CurrencyRate.Api.ApplicationServices.Reports
 
             foreach (var week in Weeks)
             {
-                sb.AppendLine(week.ToString());
+                sb.Append($"{week.StartedOn.Day}..{week.FinishedOn.Day}: ");
+
+                var rateInfos = week.GetRateInfos();
+
+                foreach (var r in rateInfos)
+                {
+                    sb.Append($"{r.Code} - max: {r.Max.ToString(DECIMAL_FORMAT, CultureInfo.InvariantCulture)}, min: {r.Min.ToString(DECIMAL_FORMAT, CultureInfo.InvariantCulture)}, media: {r.Media.ToString(DECIMAL_FORMAT, CultureInfo.InvariantCulture)}; ");
+                }
+                sb.Append(Environment.NewLine);
             }
 
             return sb.ToString();
