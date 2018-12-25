@@ -34,7 +34,7 @@ namespace CurrencyRate.Domain.Persistent.Specifications
 
             public IQueryable<Rate> Build(IQueryable<Rate> source)
             {
-                return source.Where(r => r.Date > _fromDate && r.Date < _tillDate);
+                return source.Where(r => r.Date > _fromDate && r.Date < _tillDate && _currencyCodes.Contains(r.Code));
             }
         }
 
