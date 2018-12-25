@@ -7,21 +7,6 @@ namespace CurrencyRate.Api.ApplicationServices.Reports
 {
     public class Week
     {
-        internal class ReportRateInfo
-        {
-            public ReportRateInfo(string code, decimal min, decimal max, decimal media)
-            {
-                Code = code;
-                Min = min;
-                Max = max;
-                Media = media;
-            }
-
-            public string Code { get; }
-            public decimal Min { get; }
-            public decimal Max { get; }
-            public decimal Media { get; }
-        }
 
         private readonly List<Rate> _rates;
 
@@ -51,7 +36,7 @@ namespace CurrencyRate.Api.ApplicationServices.Reports
                 .ToArray();
         }
 
-        internal List<ReportRateInfo> GetRateInfos()
+        internal ReportRateInfo[] GetRateInfos()
         {
             var rateGropus = GroupRatesByCode();
 
@@ -65,7 +50,7 @@ namespace CurrencyRate.Api.ApplicationServices.Reports
                 result.Add(new ReportRateInfo(g.Code, min, max, media));
             }
 
-            return result;
+            return result.ToArray();
         }
 
         internal Week(DateTime startedOn)
@@ -124,6 +109,5 @@ namespace CurrencyRate.Api.ApplicationServices.Reports
             return false;
         }
 
-        //public IReadOnlyList<Rate> Rates => _rates;
     }
 }

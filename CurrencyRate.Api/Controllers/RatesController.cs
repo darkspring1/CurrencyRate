@@ -35,12 +35,13 @@ namespace CurrencyRate.Api.Controllers
 
             if (lowerType == REPORT_TYPE_TXT)
             {
+                //Response.Headers.Add("Content-Type: text/plain")
                 return ActionResultAsync(_rateService.GetTxtReportAsync(year, month));
             }
 
             else if (lowerType == REPORT_TYPE_JSON)
             {
-                return ActionResultAsync(_rateService.GetJsonReportAsync(year, month));
+                return ActionResultAsync(_rateService.GetReportAsync(year, month));
             }
 
             return Task.FromResult(FaultedActionResult(ApiErrors.Error2001(type)));

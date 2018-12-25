@@ -1,30 +1,37 @@
-﻿using CurrencyRate.Domain.Entities;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Text;
 
 namespace CurrencyRate.Api.ApplicationServices.Reports
 {
-    public class TxtReportBuilder : ReportBuilder<string>
+
+    public class Report
     {
-        public TxtReportBuilder(int year, int month, Rate[] rates) : base(year, month, rates)
+        const string DECIMAL_FORMAT = "0.00";
+
+        public Report(string year, string month, WeekPeriod[] weekPeriods)
         {
+            Year = year;
+            Month = month;
+            WeekPeriods = weekPeriods;
         }
 
-        public override string Build()
+        public string Year { get; }
+        public string Month { get; }
+        public WeekPeriod[] WeekPeriods { get; }
+
+        public override string ToString()
         {
             var sb = new StringBuilder();
 
-            sb.AppendLine(string.Format("Year: {0:yyyy}, month: {0:MMMM}", Weeks[0].StartedOn));
+            sb.AppendLine($"Year: {Year}, month: {Month}");
             sb.AppendLine("Week periods:");
 
-            foreach (var week in Weeks)
+            foreach (var week in WeekPeriods)
             {
-                sb.Append($"{week.StartedOn.Day}..{week.FinishedOn.Day}: ");
+                sb.Append($"{week.StartedOn}..{week.FinishedOn}: ");
 
-                var rateInfos = week.GetRateInfos();
-
-                foreach (var r in rateInfos)
+                foreach (var r in week.Rates)
                 {
                     sb.Append($"{r.Code} - max: {r.Max.ToString(DECIMAL_FORMAT, CultureInfo.InvariantCulture)}, min: {r.Min.ToString(DECIMAL_FORMAT, CultureInfo.InvariantCulture)}, media: {r.Media.ToString(DECIMAL_FORMAT, CultureInfo.InvariantCulture)}; ");
                 }

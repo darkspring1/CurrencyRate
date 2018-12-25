@@ -15,7 +15,7 @@ namespace CurrencyRate.Api.ApplicationServices
             _rateService = rateService;
         }
        
-        public Task<IServiceResult<Error, ReportBuilder<string>>> GetTxtReportAsync(int year, int month)
+        public Task<IServiceResult<Error, string>> GetTxtReportAsync(int year, int month)
         {
             return RunAsync(async () =>
             {
@@ -23,16 +23,16 @@ namespace CurrencyRate.Api.ApplicationServices
 
                 if (ratesResult.IsFaulted)
                 {
-                    return ratesResult.TransformToFaultedResult<ReportBuilder<string>>();
+                    return ratesResult.TransformToFaultedResult<string>();
                 }
 
-                ReportBuilder<string> monthWithWeeks = new TxtReportBuilder(year, month, ratesResult.Data);
-
-                return ServiceResult<Error>.Success(monthWithWeeks);
+                var builder = new ReportBuilder(year, month, ratesResult.Data);
+                var report = builder.Build();
+                return ServiceResult<Error>.Success(report.ToString());
             });
         }
 
-        public Task<IServiceResult<Error, ReportBuilder<object>>> GetJsonReportAsync(int year, int month)
+        public Task<IServiceResult<Error, Report>> GetReportAsync(int year, int month)
         {
             return RunAsync(async () =>
             {
@@ -40,12 +40,13 @@ namespace CurrencyRate.Api.ApplicationServices
 
                 if (ratesResult.IsFaulted)
                 {
-                    return ratesResult.TransformToFaultedResult<ReportBuilder<object>>();
+                    return ratesResult.TransformToFaultedResult<Report>();
                 }
 
-                ReportBuilder<object> monthWithWeeks = new ObjectReportBuilder(year, month, ratesResult.Data);
+                var builder = new ReportBuilder(year, month, ratesResult.Data);
+                var report = builder.Build();
 
-                return ServiceResult<Error>.Success(monthWithWeeks);
+                return ServiceResult<Error>.Success(report);
             });
         }
     }

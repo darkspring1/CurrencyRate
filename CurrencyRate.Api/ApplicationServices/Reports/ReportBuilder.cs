@@ -1,16 +1,13 @@
 ﻿using CurrencyRate.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CurrencyRate.Api.ApplicationServices.Reports
 {
 
-    public abstract class ReportBuilder<TReport>
+    public class ReportBuilder
     {
-        protected const string DECIMAL_FORMAT = "0.00";
-
-        public abstract TReport Build ();
-
         public ReportBuilder(int year, int month, Rate[] rates)
         {
             var weeks = new List<Week>();
@@ -37,6 +34,18 @@ namespace CurrencyRate.Api.ApplicationServices.Reports
             }
         }
 
-        public Week[] Weeks { get; private set; }
+        public Report Build()
+        {
+            var weekPeriods = Weeks.Select(w => new WeekPeriod
+            (
+                startedOn: w.StartedOn.Day,
+                finishedOn: w.FinishedOn.Day,
+                rates: w.GetRateInfos()
+            )).ToArray();
+
+            return new Report(string.Format("{0:yyyy}", Weeks[0].StartedOn), string.Format("{0:MMMM}", Weeks[0].StartedOn), weekPeriods);
+        }
+
+        Week[] Weeks { get; set; }
     }
 }
