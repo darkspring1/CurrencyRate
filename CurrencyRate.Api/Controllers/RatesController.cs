@@ -35,7 +35,6 @@ namespace CurrencyRate.Api.Controllers
 
             if (lowerType == REPORT_TYPE_TXT)
             {
-                //Response.Headers.Add("Content-Type: text/plain")
                 return ActionResultAsync(_rateService.GetTxtReportAsync(year, month));
             }
 
