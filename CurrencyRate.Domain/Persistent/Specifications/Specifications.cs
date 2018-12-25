@@ -13,9 +13,9 @@ namespace CurrencyRate.Domain.Persistent.Specifications
         /// <param name="month"></param>
         /// <param name="year"></param>
         /// <returns></returns>
-        public static ISpecification<Rate> MonthRate(int year, int month)
+        public static ISpecification<Rate> MonthRate(int year, int month, string[] currencyCodes)
         {
-            return new MonthRateSpecification(year, month);
+            return new MonthRateSpecification(year, month, currencyCodes);
         }
 
         class MonthRateSpecification : ISpecification<Rate>
@@ -23,11 +23,13 @@ namespace CurrencyRate.Domain.Persistent.Specifications
             
             private readonly DateTime _fromDate;
             private readonly DateTime _tillDate;
+            private readonly string[] _currencyCodes;
 
-            public MonthRateSpecification(int year, int month)
+            public MonthRateSpecification(int year, int month, string[] currencyCodes)
             {
                 _fromDate = new DateTime(year, month, 1).AddDays(-1);
                 _tillDate = new DateTime(year, month + 1, 1);
+                _currencyCodes = currencyCodes;
             }
 
             public IQueryable<Rate> Build(IQueryable<Rate> source)

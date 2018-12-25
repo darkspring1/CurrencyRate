@@ -1,5 +1,6 @@
 ﻿using CurrencyRate.Abstractions;
 using CurrencyRate.Api.ApplicationServices.Reports;
+using CurrencyRate.Api.Settings;
 using CurrencyRate.Domain.Errors;
 using CurrencyRate.Domain.Services;
 using System.Threading.Tasks;
@@ -8,10 +9,12 @@ namespace CurrencyRate.Api.ApplicationServices
 {
     public class ApplicationRateService : BaseService
     {
+        private readonly string[] _currencyCodes;
         private readonly RateService _rateService;
 
-        public ApplicationRateService(RateService rateService)
+        public ApplicationRateService(ApiSettings settings, RateService rateService)
         {
+            _currencyCodes = settings.CurrencyCodes;
             _rateService = rateService;
         }
        
@@ -19,7 +22,7 @@ namespace CurrencyRate.Api.ApplicationServices
         {
             return RunAsync(async () =>
             {
-                var ratesResult = await _rateService.GetRatesAsync(year, month);
+                var ratesResult = await _rateService.GetRatesAsync(year, month, _currencyCodes);
 
                 if (ratesResult.IsFaulted)
                 {
@@ -36,7 +39,7 @@ namespace CurrencyRate.Api.ApplicationServices
         {
             return RunAsync(async () =>
             {
-                var ratesResult = await _rateService.GetRatesAsync(year, month);
+                var ratesResult = await _rateService.GetRatesAsync(year, month, _currencyCodes);
 
                 if (ratesResult.IsFaulted)
                 {

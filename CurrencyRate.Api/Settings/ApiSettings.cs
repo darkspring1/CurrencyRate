@@ -11,7 +11,9 @@ namespace CurrencyRate.Api.Settings
             
         }
 
-
         public string ConnectionString => GetString("ConnectionString");
+
+        public string[] CurrencyCodes => GetArray(nameof(CurrencyCodes), s => s);
+
     }
 }
