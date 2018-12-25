@@ -1,4 +1,7 @@
 # CurrencyRate
+В качестве БД использовал postgresql.\
+Скрипт для создание БД - https://github.com/darkspring1/CurrencyRate/blob/master/sql_scripts/Rates.sql
+
 
 ## 1. CurrencyRate.HistoricalDataService
 Отдельное консольное приложение для заполнения БД данными валютных курсов за 2017 и 2018 год (колонка Rate в отчётах CNB).
