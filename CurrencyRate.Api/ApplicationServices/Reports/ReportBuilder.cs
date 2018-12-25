@@ -46,6 +46,6 @@ namespace CurrencyRate.Api.ApplicationServices.Reports
             return new Report(string.Format("{0:yyyy}", Weeks[0].StartedOn), string.Format("{0:MMMM}", Weeks[0].StartedOn), weekPeriods);
         }
 
-        Week[] Weeks { get; set; }
+        public Week[] Weeks { get; set; }
     }
 }

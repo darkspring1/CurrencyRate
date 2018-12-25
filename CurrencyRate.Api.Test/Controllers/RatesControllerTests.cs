@@ -18,6 +18,8 @@ namespace CurrencyRate.Api.Test
     {
         private readonly ServiceProvider _serviceProvider;
 
+        const string TRAIT = "WebApi.RatesController.Unit";
+
         private void SetData(params object[] entities)
         {
             var ctx = _serviceProvider.GetRequiredService<DataContext>();
@@ -60,6 +62,7 @@ namespace CurrencyRate.Api.Test
         }
 
         [Fact]
+        [Trait("category", TRAIT)]
         public async Task ShouldReturnTxtReport()
         {
             const int year = 2018;
@@ -83,6 +86,7 @@ namespace CurrencyRate.Api.Test
 
 
         [Fact]
+        [Trait("category", TRAIT)]
         public async Task ShouldReturnJsonReport()
         {
             const int year = 2018;
